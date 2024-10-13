@@ -28,7 +28,6 @@
   </MapLibre>
   </div>
 
-
   <div class="card">
     <p>You have {markerCount} markers</p>
     <Counter />
