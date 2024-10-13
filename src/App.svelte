@@ -30,8 +30,8 @@
 
 
   <div class="card">
+    <p>You have {markerCount} markers</p>
     <Counter />
-        <p>You have {markerCount} markers</p>
   </div>
 
 </main>
