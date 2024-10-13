@@ -2,7 +2,11 @@
   import svelteLogo from './assets/svelte.svg'
   import viteLogo from '/vite.svg'
   import Counter from './lib/Counter.svelte'
-  import { MapLibre } from 'svelte-maplibre';
+  import { MapLibre, MapEvents, DefaultMarker } from 'svelte-maplibre'
+  import { MapMouseEvent } from 'maplibre-gl'
+  function addMarker(e: CustomEvent<MapMouseEvent>) {
+    markers = [...markers, { lngLat: e.detail.lngLat }];
+  }
 </script>
 
 <main>
@@ -13,7 +17,15 @@
     zoom={2}
     class="map"
     standardControls
-    style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" />
+    style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+    >
+    <MapEvents on:click={addMarker} />
+
+    {#each markers as marker}
+      <DefaultMarker lngLat={marker.lngLat} />
+    {/each}
+    </MapLibre>
+
   </div>
 
 
