@@ -1,12 +1,14 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
   import Counter from './lib/Counter.svelte'
-  import { MapLibre, MapEvents, DefaultMarker } from 'svelte-maplibre'
-  import { MapMouseEvent } from 'maplibre-gl'
+  import { MapLibre, MapEvents, DefaultMarker } from 'svelte-maplibre';
+  import { MapMouseEvent } from 'maplibre-gl';
+  // Create basic marker:
+  let markers = [];
   function addMarker(e: CustomEvent<MapMouseEvent>) {
     markers = [...markers, { lngLat: e.detail.lngLat }];
   }
+  // Counter of how many markers:
+  $: markerCount = markers.length;
 </script>
 
 <main>
@@ -17,20 +19,19 @@
     zoom={2}
     class="map"
     standardControls
-    style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-    >
+    style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json">
     <MapEvents on:click={addMarker} />
-
+  
     {#each markers as marker}
       <DefaultMarker lngLat={marker.lngLat} />
     {/each}
-    </MapLibre>
-
+  </MapLibre>
   </div>
 
 
   <div class="card">
     <Counter />
+        <p>You have {markerCount} markers</p>
   </div>
 
 </main>
